@@ -46,25 +46,27 @@ function App() {
   );
   return (
     <>
-      <Navbar />
       <div
-        className="min-h-screen text-white flex items-center justify-center"
+        className="flex flex-col h-screen justify-between"
         style={{ backgroundColor: "rgba(9, 9, 15, 1)" }}
       >
-        <div>
-          <ComparisonTable
-            users={notFollowingBack}
-            label="You Follow But They Don't"
-            actionType="unfollow"
-          />
-          <ComparisonTable
-            users={notFollowedBack}
-            label="They Follow But You Don't"
-            actionType="follow"
-          />
+        <Navbar />
+        <div className="text-white flex items-center justify-center">
+          <div>
+            <ComparisonTable
+              users={notFollowingBack}
+              label="You Follow But They Don't"
+              actionType="unfollow"
+            />
+            <ComparisonTable
+              users={notFollowedBack}
+              label="They Follow But You Don't"
+              actionType="follow"
+            />
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
