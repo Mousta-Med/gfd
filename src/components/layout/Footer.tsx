@@ -1,8 +1,10 @@
+import * as React from "react";
+
 const navigation = [
     {
         name: "Portfolio",
         href: "moustarhfir.me",
-        icon: (props) => (
+        icon: (props : React.SVGProps<SVGSVGElement>) => (
             <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                 <path
                     fill-rule="evenodd"
@@ -15,7 +17,7 @@ const navigation = [
     {
         name: "GitHub",
         href: "https://github.com/Mousta-Med",
-        icon: (props) => (
+        icon: (props: React.SVGProps<SVGSVGElement>) => (
             <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                 <path
                     fillRule="evenodd"
