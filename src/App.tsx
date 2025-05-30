@@ -1,81 +1,90 @@
 import "./App.css";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
-import {useEffect, useState} from "react";
-import {getFollowers, getFollowing} from "./services/githubAPI";
-import {ComparisonTable} from "./components/ComparisonTable";
+import { useEffect, useState } from "react";
+import {
+  getFollowers,
+  getFollowing,
+  handelOuthlogin,
+} from "./services/githubAPI";
+import { ComparisonTable } from "./components/ComparisonTable";
 
 type GitHubUser = {
-    login: string;
-    avatar_url: string;
+  login: string;
+  avatar_url: string;
 };
 
 const findDifference = (followers: GitHubUser[], following: GitHubUser[]) => {
-    const followerLogins = new Set(followers.map((f) => f.login));
-    const followingLogins = new Set(following.map((f) => f.login));
+  const followerLogins = new Set(followers.map((f) => f.login));
+  const followingLogins = new Set(following.map((f) => f.login));
 
-    const notFollowingBack = following.filter(
-        (user) => !followerLogins.has(user.login)
-    );
-    const notFollowedBack = followers.filter(
-        (user) => !followingLogins.has(user.login)
-    );
+  const notFollowingBack = following.filter(
+    (user) => !followerLogins.has(user.login)
+  );
+  const notFollowedBack = followers.filter(
+    (user) => !followingLogins.has(user.login)
+  );
 
-    return {notFollowingBack, notFollowedBack};
+  return { notFollowingBack, notFollowedBack };
 };
 
 function App() {
-    const [followers, setFollowers] = useState<GitHubUser[]>([]);
-    const [following, setFollowing] = useState<GitHubUser[]>([]);
+  const [followers, setFollowers] = useState<GitHubUser[]>([]);
+  const [following, setFollowing] = useState<GitHubUser[]>([]);
 
-    const username = "mousta-med";
+  const username = "mousta-med";
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [f1, f2] = await Promise.all([
-                    getFollowers(username),
-                    getFollowing(username)
-                ]);
-                setFollowers(f1 as GitHubUser[]);
-                setFollowing(f2 as GitHubUser[]);
-            } catch (error) {
-                console.error("Failed to fetch data:", error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [f1, f2] = await Promise.all([
+          getFollowers(username),
+          getFollowing(username),
+        ]);
+        setFollowers(f1 as GitHubUser[]);
+        setFollowing(f2 as GitHubUser[]);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
 
-        // Execute the async function
-        void fetchData();
-    }, [username]);
-    const {notFollowingBack, notFollowedBack} = findDifference(
-        followers,
-        following
-    );
-    return (
-        <>
-            <div
-                className="flex flex-col h-screen justify-between"
-                style={{backgroundColor: "rgba(9, 9, 15, 1)"}}
-            >
-                <Navbar/>
-                <div className="text-white flex items-center justify-center">
-                    <div>
-                        <ComparisonTable
-                            users={notFollowingBack}
-                            label="You Follow But They Don't"
-                            actionType="unfollow"
-                        />
-                        <ComparisonTable
-                            users={notFollowedBack}
-                            label="They Follow But You Don't"
-                            actionType="follow"
-                        />
-                    </div>
-                </div>
-                <Footer/>
-            </div>
-        </>
-    );
+    // Execute the async function
+    void fetchData();
+  }, [username]);
+  const { notFollowingBack, notFollowedBack } = findDifference(
+    followers,
+    following
+  );
+  return (
+    <>
+      <div
+        className="flex flex-col h-screen justify-between"
+        style={{ backgroundColor: "rgba(9, 9, 15, 1)" }}
+      >
+        <Navbar />
+        <div className="text-white flex items-center justify-center">
+          <div>
+            <ComparisonTable
+              users={notFollowingBack}
+              label="You Follow But They Don't"
+              actionType="unfollow"
+            />
+            <ComparisonTable
+              users={notFollowedBack}
+              label="They Follow But You Don't"
+              actionType="follow"
+            />
+          </div>
+          <div className="flex flex-col items-center text-amber-50">
+            <button onClick={handelOuthlogin} className="bg-amber-500">
+              login with github
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    </>
+  );
 }
 
 export default App;
