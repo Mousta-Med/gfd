@@ -2,11 +2,7 @@ import "./App.css";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import { useEffect, useState } from "react";
-import {
-  getFollowers,
-  getFollowing,
-  handelOuthlogin,
-} from "./services/githubAPI";
+import { getFollowers, getFollowing } from "./services/githubAPI";
 import { ComparisonTable } from "./components/ComparisonTable";
 
 type GitHubUser = {
