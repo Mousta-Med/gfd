@@ -2,7 +2,11 @@ import "./App.css";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import { useEffect, useState } from "react";
-import { getFollowers, getFollowing } from "./services/githubAPI";
+import {
+  handleOAuthLogin,
+  getFollowers,
+  getFollowing,
+} from "./services/githubAPI";
 import { ComparisonTable } from "./components/ComparisonTable";
 
 type GitHubUser = {
@@ -72,7 +76,7 @@ function App() {
             />
           </div>
           <div className="flex flex-col items-center text-amber-50">
-            <button onClick={handelOuthlogin} className="bg-amber-500">
+            <button onClick={handleOAuthLogin} className="bg-amber-500">
               login with github
             </button>
           </div>
