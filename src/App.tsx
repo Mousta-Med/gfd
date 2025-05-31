@@ -6,6 +6,7 @@ import {
   handleOAuthLogin,
   getFollowers,
   getFollowing,
+  exchangeCodeForToken,
 } from "./services/githubAPI";
 import { ComparisonTable } from "./components/ComparisonTable";
 
@@ -35,6 +36,15 @@ function App() {
   const username = "mousta-med";
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    const stateParam = urlParams.get("state");
+    if (code && stateParam) {
+      exchangeCodeForToken(code, stateParam);
+    } else {
+      console.error("Missing required OAuth parameters");
+    }
+
     const fetchData = async () => {
       try {
         const [f1, f2] = await Promise.all([

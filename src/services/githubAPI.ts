@@ -56,3 +56,32 @@ export const handleOAuthLogin = async () => {
   const link = `https://github.com/login/oauth/authorize?client_id=${client_id}&response_type=code&scope=repo&redirect_uri=${window.location.origin}/integrations/github/oauth2/callback&state=${state}`;
   window.location.assign(link);
 };
+
+export const exchangeCodeForToken = async (
+  code: string,
+  state: string
+): Promise<TokenResponse> => {
+  try {
+    // Validate the state parameter against stored CSRF token
+    const storedState = localStorage.getItem("latestCSRFToken");
+    if (!storedState || state !== storedState) {
+      throw new Error("Invalid state parameter");
+    }
+
+    // Clean up the stored CSRF token
+    localStorage.removeItem("latestCSRFToken");
+
+    // Exchange the code for an access token
+    const res = await axios.post<TokenResponse>("/api/oauth-token", { code });
+    return res.data;
+  } catch (error) {
+    console.error("Error exchanging code for token:", error);
+    throw error;
+  }
+};
+
+interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  scope: string;
+}
