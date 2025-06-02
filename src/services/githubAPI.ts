@@ -72,8 +72,12 @@ export const exchangeCodeForToken = async (
     localStorage.removeItem("latestCSRFToken");
 
     // Exchange the code for an access token
-    const res = await axios.post<TokenResponse>("/api/oauth-token", { code });
+    const res = await axios.post<TokenResponse>(
+      "http://localhost:3001/api/oauth-token",
+      { code }
+    );
     return res.data;
+    console.log("Access token received:", res.data.access_token);
   } catch (error) {
     console.error("Error exchanging code for token:", error);
     throw error;
