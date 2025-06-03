@@ -86,7 +86,10 @@ function App() {
             />
           </div>
           <div className="flex flex-col items-center text-amber-50">
-            <button onClick={handleOAuthLogin} className="bg-amber-500">
+            <button
+              onClick={handleOAuthLogin}
+              className="bg-amber-500 text-amber-50"
+            >
               login with github
             </button>
           </div>
