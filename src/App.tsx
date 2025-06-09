@@ -88,7 +88,7 @@ function App() {
           <div className="flex flex-col items-center text-amber-50">
             <button
               onClick={handleOAuthLogin}
-              className="bg-amber-500 text-amber-50"
+              className="bg-amber-500 text-amber-50 rounded-2xl px-4 py-2 mt-4 hover:bg-amber-600 transition-colors duration-300"
             >
               login with github
             </button>
