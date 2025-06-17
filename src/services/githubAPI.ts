@@ -162,7 +162,7 @@ export const exchangeCodeForToken = async (
 
     // Exchange the code for an access token
     const apiUrl = import.meta.env.VITE_API_URL;
-    const res = await axios.post<TokenResponse>(`${apiUrl}/api/oauth-token`, {
+    const res = await axios.post<TokenResponse>(`${apiUrl}/api/oauth-t oken`, {
       code,
     });
 
