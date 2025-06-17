@@ -161,10 +161,10 @@ export const exchangeCodeForToken = async (
     localStorage.removeItem("latestCSRFToken");
 
     // Exchange the code for an access token
-    const res = await axios.post<TokenResponse>(
-      "http://localhost:3001/api/oauth-token",
-      { code }
-    );
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const res = await axios.post<TokenResponse>(`${apiUrl}/api/oauth-token`, {
+      code,
+    });
 
     // Store the access token for future API calls
     if (res.data.access_token) {
