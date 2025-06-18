@@ -19,6 +19,16 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+          # Create deployment
+      - name: Create GitHub deployment
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: https://happy-dune-07a825b03.azurestaticapps.net
+          environment: production
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
